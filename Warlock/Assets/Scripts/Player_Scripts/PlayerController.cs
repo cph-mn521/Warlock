@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
             Input.GetKey(KeyCode.S),
             Input.GetKey(KeyCode.D)
             };
-            ClientSend.PlayerMovement(_inputs);
+            //ClientSend.PlayerMovement(_inputs);
             
 
         

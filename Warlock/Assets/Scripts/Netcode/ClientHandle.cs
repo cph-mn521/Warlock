@@ -23,7 +23,9 @@ public class ClientHandle : MonoBehaviour {
     public static void playerPosition(Packet _packet){
         int _id = _packet.ReadInt();
         Vector3 _position = _packet.ReadVector3();
+        Vector3 _velocity = _packet.ReadVector3();
         GameManager.players[_id].transform.position = _position;
+        GameManager.players[_id].GetComponent<Rigidbody>().velocity= _velocity;
     }
     public static void playerRotation(Packet _packet){
         int _id = _packet.ReadInt();
