@@ -3,9 +3,6 @@
 public class PlayerMovement : MonoBehaviour
 {
 
-    public float movementSpeed;
-    public CharacterController controller;
-    public Rigidbody rb;
     float AngleBetweenTwoPoints(Vector3 a, Vector3 b) {
         return Mathf.Atan2(a.y - b.y, a.x - b.x) * Mathf.Rad2Deg;
     }
@@ -19,11 +16,10 @@ public class PlayerMovement : MonoBehaviour
         float z = Input.GetAxisRaw("Vertical");
 
         Vector3 movement = new Vector3 (x, 0.0f, z);
-        rb.AddForce(movement * movementSpeed * Time.deltaTime, ForceMode.VelocityChange);
+        //rb.AddForce(movement * movementSpeed * Time.deltaTime, ForceMode.VelocityChange);
 
         #endregion
-        //Vector3 toMove = new Vector3(x, 0f, z) * Time.deltaTime * movementSpeed;
-        //controller.Move(toMove);
+
         #region Rotation
          //Get the Screen positions of the object
          Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
@@ -35,10 +31,13 @@ public class PlayerMovement : MonoBehaviour
          float angle = -AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);
          transform.rotation =  Quaternion.Euler (new Vector3(0f, angle + -90f, 0f));
         
-        #endregion
-        
+        #endregion        
         ClientSend.PlayerMovement(movement);
         
+        if(Input.GetMouseButtonUp(0)){
+            ClientSend.castSpell(0);
+        }
+
     }
 
 }

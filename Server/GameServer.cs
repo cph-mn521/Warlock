@@ -14,7 +14,7 @@ namespace GameServer {
         private static void MainThread(){
             Console.WriteLine($"Main Thread has started. Running at {Constants.TICKS_PR_SEC} Ticks pr second.");
             DateTime _nextLoop = DateTime.Now;
-
+            Spell.InitializeSpells();
             while (_isRunning)
             {
                 while (_nextLoop < DateTime.Now)

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jutsu\\Documents\\Unity\\Server\\GameServer.csproj",
+      "projectUniqueName": "c:\\Users\\Jutsu\\Documents\\Warlock\\Server\\GameServer.csproj",
       "projectName": "GameServer",
-      "projectPath": "C:\\Users\\Jutsu\\Documents\\Unity\\Server\\GameServer.csproj",
+      "projectPath": "c:\\Users\\Jutsu\\Documents\\Warlock\\Server\\GameServer.csproj",
       "packagesPath": "C:\\Users\\Jutsu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jutsu\\Documents\\Unity\\Server\\obj\\",
+      "outputPath": "c:\\Users\\Jutsu\\Documents\\Warlock\\Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Jutsu\\AppData\\Roaming\\NuGet\\NuGet.Config"

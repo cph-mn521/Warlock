@@ -9,3 +9,14 @@ C:\Users\Jutsu\Documents\Unity\Server\bin\Debug\netcoreapp3.1\GameServer.dll
 C:\Users\Jutsu\Documents\Unity\Server\bin\Debug\netcoreapp3.1\GameServer.pdb
 C:\Users\Jutsu\Documents\Unity\Server\obj\Debug\netcoreapp3.1\GameServer.dll
 C:\Users\Jutsu\Documents\Unity\Server\obj\Debug\netcoreapp3.1\GameServer.pdb
+C:\Users\Jutsu\Documents\Warlock\Server\bin\Debug\netcoreapp3.1\GameServer.exe
+C:\Users\Jutsu\Documents\Warlock\Server\bin\Debug\netcoreapp3.1\GameServer.deps.json
+C:\Users\Jutsu\Documents\Warlock\Server\bin\Debug\netcoreapp3.1\GameServer.runtimeconfig.json
+C:\Users\Jutsu\Documents\Warlock\Server\bin\Debug\netcoreapp3.1\GameServer.runtimeconfig.dev.json
+C:\Users\Jutsu\Documents\Warlock\Server\bin\Debug\netcoreapp3.1\GameServer.dll
+C:\Users\Jutsu\Documents\Warlock\Server\bin\Debug\netcoreapp3.1\GameServer.pdb
+C:\Users\Jutsu\Documents\Warlock\Server\obj\Debug\netcoreapp3.1\GameServer.csprojAssemblyReference.cache
+C:\Users\Jutsu\Documents\Warlock\Server\obj\Debug\netcoreapp3.1\GameServer.AssemblyInfoInputs.cache
+C:\Users\Jutsu\Documents\Warlock\Server\obj\Debug\netcoreapp3.1\GameServer.AssemblyInfo.cs
+C:\Users\Jutsu\Documents\Warlock\Server\obj\Debug\netcoreapp3.1\GameServer.dll
+C:\Users\Jutsu\Documents\Warlock\Server\obj\Debug\netcoreapp3.1\GameServer.pdb

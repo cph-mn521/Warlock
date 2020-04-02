@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Jutsu\\Documents\\Unity\\Server\\GameServer.csproj": {}
+    "C:\\Users\\Jutsu\\Documents\\Warlock\\Server\\GameServer.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Jutsu\\Documents\\Unity\\Server\\GameServer.csproj": {
+    "C:\\Users\\Jutsu\\Documents\\Warlock\\Server\\GameServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Jutsu\\Documents\\Unity\\Server\\GameServer.csproj",
+        "projectUniqueName": "C:\\Users\\Jutsu\\Documents\\Warlock\\Server\\GameServer.csproj",
         "projectName": "GameServer",
-        "projectPath": "c:\\Users\\Jutsu\\Documents\\Unity\\Server\\GameServer.csproj",
+        "projectPath": "C:\\Users\\Jutsu\\Documents\\Warlock\\Server\\GameServer.csproj",
         "packagesPath": "C:\\Users\\Jutsu\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Jutsu\\Documents\\Unity\\Server\\obj\\",
+        "outputPath": "C:\\Users\\Jutsu\\Documents\\Warlock\\Server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Jutsu\\AppData\\Roaming\\NuGet\\NuGet.Config"

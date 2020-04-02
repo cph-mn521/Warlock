@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd30d14361fdd0f4da7c9b01f2162784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ip: 127.0.0.1
+  ip: 192.168.0.41
   port: 26950
   myId: 0
 --- !u!4 &421933639
@@ -869,9 +869,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25e39fb08b6f1d4b995c8a0bc50ce99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localPlayerPrefab: {fileID: 6304364207944600037, guid: 4514ba0e2c95c534e8ef91b8bed3a854,
+  localPlayerPrefab: {fileID: 3130913852121546412, guid: 3a824cb2a8fc7f4419022a9c0be71e71,
     type: 3}
-  playerPrefab: {fileID: 7109873060844415676, guid: 2c129d38ebf0ecd4fa7626a76604fbb3,
+  playerPrefab: {fileID: 5638122376491520402, guid: 4d5186d5d1be56d4e811248d1fd64fbc,
+    type: 3}
+  FireballPrefab: {fileID: 9199305125548312996, guid: 151dd970e3bb06b4c87fc78d7d5942fb,
     type: 3}
 --- !u!4 &1214094153
 Transform:
