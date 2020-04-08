@@ -12,7 +12,9 @@
             playerPosition,
             playerRotation,
             SpellUpdate,
-            removeSpell
+            removeSpell,
+            playerHp,
+            playerDespawn
         }
 
         /// <summary>Sent from client to server.</summary>

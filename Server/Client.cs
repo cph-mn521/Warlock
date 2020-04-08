@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Net;
 using System.Net.Sockets;
+using System.Numerics;
 using System.Text;
 
 namespace GameServer {
@@ -132,22 +132,21 @@ namespace GameServer {
 
         }
 
-        public void SendIntoGame(string _PlayerName){
-            player = new Player(id,_PlayerName,new Vector3(0,0,0));
-            foreach (Client _client in Server.clients.Values)
-            {
-                if(_client.player != null){
-                    if(_client.id != id){
-                        ServerSend.SpawnPlayer(id,_client.player);
+        public void SendIntoGame (string _PlayerName) {
+            player = new Player (id, _PlayerName, new Vector3 (0, 0, 0));
+            GameLogic.players += 1;
+            Console.WriteLine (GameLogic.players);
+            foreach (Client _client in Server.clients.Values) {
+                if (_client.player != null) {
+                    if (_client.id != id) {
+                        ServerSend.SpawnPlayer (id, _client.player);
                     }
                 }
-                
+
             }
-            foreach (Client _client in Server.clients.Values)
-            {
-                if (_client.player != null)
-                {
-                    ServerSend.SpawnPlayer(_client.id,player);
+            foreach (Client _client in Server.clients.Values) {
+                if (_client.player != null) {
+                    ServerSend.SpawnPlayer (_client.id, player);
                 }
             }
         }

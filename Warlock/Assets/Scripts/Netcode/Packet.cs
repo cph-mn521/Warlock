@@ -11,7 +11,9 @@ public enum ServerPackets {
     playerPosition,
     playerRotation,
     SpellUpdate,
-    removeSpell
+    removeSpell,
+    playerHp,
+    playerDespawn
 
 }
 

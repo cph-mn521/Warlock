@@ -32,12 +32,13 @@ public class ClientSend : MonoBehaviour {
             sendUDPData (_packet);
         }
     }
-    public static void castSpell (int slot) {
+    public static void castSpell (int slot, Vector3 target) {
         using (Packet _packet = new Packet ((int) ClientPackets.playerCast)) {
-
             _packet.Write (slot);
+            _packet.Write(target);
             _packet.Write (GameManager.players[Client.instance.myId].transform.rotation);
             sendUDPData (_packet);
+            Debug.Log("pew");
         }
     }
 

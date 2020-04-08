@@ -60,9 +60,21 @@
                 using (Packet _packet = new Packet ((int) ServerPackets.spawnPlayer)) {
                     _packet.Write (_player.id);
                     _packet.Write (_player.username);
+                    _packet.Write (_player.getHp ());
                     _packet.Write (_player.position);
                     _packet.Write (_player.rotation);
                     sendTCPData (_toClient, _packet);
+                }
+            }
+
+            public static void SpawnPlayer (Player _player) {
+                using (Packet _packet = new Packet ((int) ServerPackets.spawnPlayer)) {
+                    _packet.Write (_player.id);
+                    _packet.Write (_player.username);
+                    _packet.Write (_player.getHp ());
+                    _packet.Write (_player.position);
+                    _packet.Write (_player.rotation);
+                    SendTCPDataToAll (_packet);
                 }
             }
 
@@ -79,6 +91,19 @@
                     _packet.Write (_player.id);
                     _packet.Write (_player.rotation);
                     SendUDPDataToAll (_player.id, _packet);
+                }
+            }
+            public static void DespawnPlayer (Player _player) {
+                using (Packet _packet = new Packet ((int) ServerPackets.playerDespawn)) {
+                    _packet.Write (_player.id);
+                    SendUDPDataToAll (_packet);
+                }
+            }
+            public static void PlayerHp (Player _player) {
+                using (Packet _packet = new Packet ((int) ServerPackets.playerHp)) {
+                    _packet.Write (_player.id);
+                    _packet.Write (_player.getHp ());
+                    SendUDPDataToAll (_packet);
                 }
             }
 

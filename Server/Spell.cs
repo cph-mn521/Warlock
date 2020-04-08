@@ -62,17 +62,24 @@ namespace GameServer {
             float z = 1 - 2 * (_rotation.X * _rotation.X + _rotation.Y * _rotation.Y);
             return new Vector3 (x, 0, z);
         }
+        private static Vector3 noramlize(Vector3 vector){
+            Vector3 o =vector/vector.Length();
+            return o;
+        }
 
         public static void InitializeSpells () {
             SpellHandlers = new Dictionary<int, SpellBehavior> () {
                 {
-                (int) SpellType.Fireball, FireballBehavior
+                (int) SpellType.Fireball, Fireball
+                },
+                {
+                (int) SpellType.Teleport, Teleport
                 }
             };
         }
 
         #region SpellBehavior
-        public static void FireballBehavior (Spell _spell) {
+        public static void Fireball (Spell _spell) {
             float FireballSpeed = 1;
             bool cleanupFlag = true;
             Vector3 _forward = forward (_spell.rotation);
@@ -87,10 +94,13 @@ namespace GameServer {
                     //TODO fix diz bug nul pointer.
                     if (playerPos != null) {
                         Vector3 distance = playerPos - _spell.position;
-                        distance.Y = 0;
+                        distance.Y = 0;                        
                         if (distance.Length () <= 2f && _spell.ownerId != Server.clients[i].player.id) {
-                            Console.WriteLine(distance * (1f + 0.2f * _spell.rank));
-                            Server.clients[i].player.addVelocity (distance * (1f + 0.2f * _spell.rank));
+                            Vector3 normDistance = noramlize(distance);
+                            Console.WriteLine(normDistance);
+                            Console.WriteLine(normDistance.Length());
+                            Server.clients[i].player.addVelocity (normDistance * (.8f + 0.2f * _spell.rank));
+                            Server.clients[i].player.dmg(5);
                              spellsToRemove.Add (_spell);
                              cleanupFlag = false;
                         }
@@ -104,13 +114,23 @@ namespace GameServer {
             }
             if (tmElapsed.TotalMilliseconds > 4000 && cleanupFlag) {
                 spellsToRemove.Add (_spell);
-
             }
         }
-        public static void FireballLigthning (Spell _spell) {
+        public static void Ligthning (Spell _spell) {
 
         }
-        public static void FireballTeleport (Spell _spell) {
+        public static void Teleport (Spell _spell) {
+            Player _player = Server.clients[_spell.ownerId].player;
+            Vector3 distance = _spell.target-_player.position;
+            int distancePrRank = 8;
+            if(distance.Length() > distancePrRank*_spell.rank){
+                distance = distance * (distancePrRank*_spell.rank/distance.Length());
+            }
+            Console.WriteLine(_spell.target);
+            distance.Y=0;
+            _player.position = _player.position+distance;
+            spellsToRemove.Add (_spell);
+
 
         }
         #endregion

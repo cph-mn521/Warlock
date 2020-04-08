@@ -22,16 +22,21 @@
                 Quaternion _rotation = _packet.ReadQuaternion();
                 Server.clients[_fromClient].player.SetInput(_inputs,_rotation);
             }
-
+            
             public static void playerCast(int _fromClient, Packet _packet){ // Race Conditions.
                 Player p = Server.clients[_fromClient].player;
+                if(p.removed){
+                    return;
+                }
                 int slot = _packet.ReadInt();
+                Vector3 _target = _packet.ReadVector3();
+                Quaternion _rotation = _packet.ReadQuaternion();
                 DateTime _nextLoop = DateTime.Now;
-                if (p.spells[slot] != null){ //Spilleren har spell i det slot
+                if (p.spells[slot] != null ){ //Spilleren har spell i det slot
                     TimeSpan tmElapsed = DateTime.Now - p.LastCast[slot];
                     if (tmElapsed.TotalMilliseconds  >= p.cooldowns[slot]){ //Spell ikke på Cooldown 
                         int id = Spell.spellCount;                       
-                        Spell _spell = new Spell(id,p.spellRank[slot],_fromClient,p.spells[slot],p.position,p.rotation); //find en måde at opbevare de her spells. Hvor henne giver mening?
+                        Spell _spell = new Spell(id,p.spellRank[slot],_fromClient,p.spells[slot],p.position,p.rotation,_target); //find en måde at opbevare de her spells. Hvor henne giver mening?
                         Spell.AllSpells.Add(_spell);
                         Spell.spellCount =Spell.spellCount+1;
                         p.LastCast[slot] = DateTime.Now;

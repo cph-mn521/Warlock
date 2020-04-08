@@ -199,7 +199,9 @@ public class Client : MonoBehaviour {
                {(int)ServerPackets.playerRotation, ClientHandle.playerRotation},
                {(int)ServerPackets.spawnSpell, ClientHandle.spawnSpell},
                {(int)ServerPackets.SpellUpdate, ClientHandle.SpellUpdate},
-               {(int)ServerPackets.removeSpell, ClientHandle.removeSpell}
+               {(int)ServerPackets.removeSpell, ClientHandle.removeSpell},
+               {(int)ServerPackets.playerHp,ClientHandle.playerHp},
+               {(int)ServerPackets.playerDespawn,ClientHandle.despawnPlayer}
 
 
         };

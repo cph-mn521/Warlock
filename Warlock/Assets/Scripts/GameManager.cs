@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
             Destroy (this);
         }
     }
-    public void spawnPlayer (int _id, string _username, Vector3 _position, Quaternion _rotation) {
+    public void spawnPlayer (int _id, string _username, float _hp, Vector3 _position, Quaternion _rotation) {
         GameObject _player;
         if (_id == Client.instance.myId) {
             _player = Instantiate (localPlayerPrefab, _position, _rotation);
@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour {
         }
         _player.GetComponent<PlayerManager> ().id = _id;
         _player.GetComponent<PlayerManager> ().username = _username;
+        _player.GetComponent<PlayerManager>().health=_hp;
         _player.GetComponent<PlayerManager> ().position = _position;
         players.Add (_id, _player.GetComponent<PlayerManager> ());
         Debug.Log ($"added player with id:{_id}");
@@ -57,5 +58,10 @@ public class GameManager : MonoBehaviour {
     public void removeSpell(int id){
         Destroy(spells[id].gameObject);
         spells.Remove(id);
+    }
+
+    public void removePlayer(int id){
+        Destroy(players[id].gameObject);
+        players.Remove(id);
     }
 }
