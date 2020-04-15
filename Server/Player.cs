@@ -23,7 +23,7 @@ namespace GameServer {
         private float currentHP;
         public int[] spellRank = new int[6];
         //
-        private float drag = 0.9f;
+        private float drag = 0.95f;
         private Vector3 inputs;
         private Vector3 Velocity;
 
@@ -67,7 +67,7 @@ namespace GameServer {
         }
 
         private void addDrag () {
-            if (Velocity.Length () < 0.5f) {
+            if (Velocity.Length () < 0.01f) {
                 Velocity = new Vector3 (0, 0, 0);
             } else {
                 Velocity = Velocity * drag;
