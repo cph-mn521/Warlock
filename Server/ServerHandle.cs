@@ -40,7 +40,7 @@
                         Spell.AllSpells.Add(_spell);
                         Spell.spellCount =Spell.spellCount+1;
                         p.LastCast[slot] = DateTime.Now;
-                        ServerSend.SpawnSpell(_spell);
+                        ServerSend.Instance.SpawnSpell(_spell);
                         
                     }
                 }

@@ -51,7 +51,7 @@ namespace GameServer {
             if (!removed) {
                 Move ();
                 addDrag ();
-                if (position.Length () > GameLogic.mapSize) {
+                if (position.Length () > Program.game.mapSize )  {
                     dmg (0.5f);
 
                 }
@@ -62,8 +62,8 @@ namespace GameServer {
         private void Move () {
             position += inputs * moveSpeed;
             position += Velocity;
-            ServerSend.PlayerPosition (this);
-            ServerSend.PlayerRotation (this);
+            ServerSend.Instance.PlayerPosition (this);
+            ServerSend.Instance.PlayerRotation (this);
         }
 
         private void addDrag () {
@@ -89,11 +89,11 @@ namespace GameServer {
         }
         public void dmg (float amount) {
             currentHP -= amount;
-            ServerSend.PlayerHp (this);
-            if (currentHP <= 0 && !removed && GameLogic.round) {
+            ServerSend.Instance.PlayerHp (this);
+            if (currentHP <= 0 && !removed && Program.game.round) {
                 playersToDespawn.Add (this);
                 removed = true;
-                GameLogic.deadPlayers +=1;
+                Program.game.deadPlayers +=1;
             }
         }
         public void changeMaxHp (float amount) {

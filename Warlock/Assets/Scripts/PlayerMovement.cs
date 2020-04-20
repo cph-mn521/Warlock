@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-
+﻿using System;
+using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     float AngleBetweenTwoPoints (Vector3 a, Vector3 b) {
@@ -7,6 +7,15 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     public Camera _camera;
+    public Animator _animator;
+
+    private bool iscasting = false;
+    private int currentlyCasting;
+    private DateTime castStart;
+    private float delay;
+
+
+
     void FixedUpdate () {
 
         #region Movement
@@ -29,28 +38,51 @@ public class PlayerMovement : MonoBehaviour {
         float angle = -AngleBetweenTwoPoints (positionOnScreen, mouseOnScreen);
         transform.rotation = Quaternion.Euler (new Vector3 (0f, angle + -90f, 0f));
 
+        Ray ray = _camera.ScreenPointToRay (Input.mousePosition);
+        RaycastHit hit;
+        
+
         #endregion        
         ClientSend.PlayerMovement (movement);
 
         if (Input.GetMouseButtonUp (0)) {
-            Ray ray = _camera.ScreenPointToRay (Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast (ray, out hit)) {
-
-                ClientSend.castSpell (0, hit.point);
+            if (Physics.Raycast (ray, out hit)) {            
+                if (!iscasting) {
+                    _animator.SetTrigger ("Cast2");
+                    currentlyCasting = 0;
+                    iscasting = true;
+                    castStart = DateTime.Now;
+                    delay = 900f;
+                }
             }
-
         }
         if (Input.GetKey ("space")) {
-            Ray ray = _camera.ScreenPointToRay (Input.mousePosition);
-            RaycastHit hit;
             if (Physics.Raycast (ray, out hit)) {
-
-                ClientSend.castSpell (1,hit.point);
+                
+                if (!iscasting) {
+                    _animator.SetTrigger ("Cast1");
+                    currentlyCasting = 1;
+                    iscasting = true;
+                    castStart = DateTime.Now;
+                    delay = 500f;
+                }
 
             }
         }
+        if (Physics.Raycast (ray, out hit)) {
+            CastSpell(hit.point);
+        }
+        
 
+    }
+
+    private void CastSpell ( Vector3 point) {
+
+        TimeSpan tmElapsed = DateTime.Now - castStart;
+        if (iscasting && tmElapsed.TotalMilliseconds > delay) {
+            ClientSend.castSpell (currentlyCasting, point);           
+            iscasting = false;
+        }
     }
 
 }

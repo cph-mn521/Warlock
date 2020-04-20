@@ -84,7 +84,7 @@ namespace GameServer {
             bool cleanupFlag = true;
             Vector3 _forward = forward (_spell.rotation);
             _spell.position += _forward * FireballSpeed;
-            ServerSend.SpellUpdate (_spell);
+            ServerSend.Instance.SpellUpdate (_spell);
             TimeSpan tmElapsed = DateTime.Now - _spell.spawnTime;
             List<Client> items = new List<Client> ();
             items.AddRange (Server.clients.Values);

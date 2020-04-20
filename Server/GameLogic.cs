@@ -7,16 +7,25 @@
         public class GameLogic {
 
             #region flags
-            public static bool round = false;
-            private static bool endGoofTime = false;
-            private static bool init = false;
+            public bool round = false;
+            private bool endGoofTime = false;
+            private bool init = false;
 
             #endregion
-            private static DateTime time = DateTime.Now;
-            public static float mapSize = 25;
-            public static int deadPlayers = 0;
-            public static int players = 0;
-            public static void Update () {
+            
+            #region Constructor and Constructor params
+            DateTime gameStart;
+
+            public GameLogic(){
+                gameStart = DateTime.Now;
+            }
+            #endregion
+            
+            private DateTime time = DateTime.Now;
+            public float mapSize = 25;
+            public int deadPlayers = 0;
+            public int players = 0;
+            public void Update () {
                 if (init) {
                     InitRound ();
                 }
@@ -29,7 +38,7 @@
 
             }
 
-            private static void gameRound () {
+            private void gameRound () {
                 foreach (Client _client in Server.clients.Values) {
                     if (_client.player != null) {
                         _client.player.Update ();
@@ -40,12 +49,12 @@
                 }
                 #region Cleanup
                 foreach (Spell _spell in Spell.spellsToRemove) {
-                    ServerSend.removeSpell (_spell);
+                    ServerSend.Instance.removeSpell (_spell);
                     Spell.AllSpells.Remove (_spell);
                 }
 
                 foreach (Player _player in Player.playersToDespawn) {
-                    ServerSend.DespawnPlayer (_player);
+                    ServerSend.Instance.DespawnPlayer (_player);
 
                 }
 
@@ -56,7 +65,7 @@
                 if (players == deadPlayers + 1) {
                     Console.WriteLine ("time to restart round");
                     for (int i = 1; i <= ServerHandle.playersInGame; i++) {
-                        ServerSend.DespawnPlayer (Server.clients[i].player);
+                        ServerSend.Instance.DespawnPlayer (Server.clients[i].player);
                         Wait(DateTime.Now,2000);
                     }
                     init = true;
@@ -66,7 +75,7 @@
                 ThreadManager.UpdateMain ();
             }
 
-            private static void goofTime () {
+            private void goofTime () {
                 foreach (Client _client in Server.clients.Values) {
                     if (_client.player != null) {
                         _client.player.Update ();
@@ -77,7 +86,7 @@
                 }
                 #region Cleanup
                 foreach (Spell _spell in Spell.spellsToRemove) {
-                    ServerSend.removeSpell (_spell);
+                    ServerSend.Instance.removeSpell (_spell);
                     Spell.AllSpells.Remove (_spell);
                 }
                 Spell.spellsToRemove = new List<Spell> ();
@@ -98,7 +107,7 @@
                     init = true;
                     endGoofTime = false;
                     for (int i = 1; i <= ServerHandle.playersInGame; i++) {
-                        ServerSend.DespawnPlayer (Server.clients[i].player);
+                        ServerSend.Instance.DespawnPlayer (Server.clients[i].player);
                         Wait(DateTime.Now,2000);                        
                     }
                 }
@@ -107,19 +116,19 @@
             }
 
             #region helpfunctions
-            private static void InitRound () {
+            private void InitRound () {
                 Console.WriteLine ("initialising round");
                 for (int i = 1; i <= ServerHandle.playersInGame; i++) {
                     Server.clients[i].player.position = new Vector3 (0, 0, 0);
                     Server.clients[i].player.removed = false;
                     Server.clients[i].player.resetHp ();
                     deadPlayers = 0;
-                    ServerSend.SpawnPlayer (Server.clients[i].player);
+                    ServerSend.Instance.SpawnPlayer (Server.clients[i].player);
                 }
                 init = false;
                 
             }
-            private static void Wait(DateTime time,int wait){
+            private void Wait(DateTime time,int wait){
                 TimeSpan TimeElapsed = DateTime.Now - time;
                 while (TimeElapsed.TotalMilliseconds<wait)
                 {

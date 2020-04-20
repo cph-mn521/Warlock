@@ -38,7 +38,7 @@ namespace GameServer {
                 receiveBuffer = new byte[dataBufferSize];
                 stream.BeginRead (receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
 
-                ServerSend.Welcome (id, "welcome to the server");
+                ServerSend.Instance.Welcome (id, "welcome to the server");
 
             }
 
@@ -134,19 +134,19 @@ namespace GameServer {
 
         public void SendIntoGame (string _PlayerName) {
             player = new Player (id, _PlayerName, new Vector3 (0, 0, 0));
-            GameLogic.players += 1;
-            Console.WriteLine (GameLogic.players);
+            Program.game.players += 1;
+            Console.WriteLine (Program.game.players);
             foreach (Client _client in Server.clients.Values) {
                 if (_client.player != null) {
                     if (_client.id != id) {
-                        ServerSend.SpawnPlayer (id, _client.player);
+                        ServerSend.Instance.SpawnPlayer (id, _client.player);
                     }
                 }
 
             }
             foreach (Client _client in Server.clients.Values) {
                 if (_client.player != null) {
-                    ServerSend.SpawnPlayer (_client.id, player);
+                    ServerSend.Instance.SpawnPlayer (_client.id, player);
                 }
             }
         }

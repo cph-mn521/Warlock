@@ -1,0 +1,3 @@
+C:\Users\Jutsu\Documents\Unity\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache
+C:\Users\Jutsu\Documents\Unity\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfoInputs.cache
+C:\Users\Jutsu\Documents\Unity\Server\obj\Debug\netcoreapp3.1\Server.AssemblyInfo.cs

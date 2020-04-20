@@ -61,7 +61,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void removePlayer(int id){
-        Destroy(players[id].gameObject);
+        players[id]._animator.SetTrigger("Death");
+        Destroy(players[id].GetComponent<PlayerManager>());
+        Destroy(players[id].GetComponent<PlayerMovement>());
+        Destroy(players[id].transform.GetChild (1).gameObject);
         players.Remove(id);
     }
 }

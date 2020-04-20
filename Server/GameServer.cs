@@ -4,6 +4,8 @@ namespace GameServer {
     class Program {
         private static bool _isRunning = false;
         
+        public static GameLogic game;
+
         static void Main(string[] args){
             Console.Title = "gameServer";
             _isRunning= true;
@@ -15,12 +17,12 @@ namespace GameServer {
             Console.WriteLine($"Main Thread has started. Running at {Constants.TICKS_PR_SEC} Ticks pr second.");
             DateTime _nextLoop = DateTime.Now;
             Spell.InitializeSpells();
-            
+            game = new GameLogic();
             while (_isRunning)
             {
                 while (_nextLoop < DateTime.Now)
                 {
-                    GameLogic.Update();
+                    game.Update();
 
                     _nextLoop = _nextLoop.AddMilliseconds(Constants.MS_PR_TICK);
 

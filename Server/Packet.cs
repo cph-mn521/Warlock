@@ -7,6 +7,7 @@
         /// <summary>Sent from server to client.</summary>
         public enum ServerPackets {
             welcome = 1,
+            serverBroadcast,
             spawnPlayer,
             spawnSpell,
             playerPosition,
@@ -15,6 +16,7 @@
             removeSpell,
             playerHp,
             playerDespawn
+
         }
 
         /// <summary>Sent from client to server.</summary>
