@@ -81,28 +81,24 @@ namespace GameServer {
         #region SpellBehavior
         public static void Fireball (Spell _spell) {
             float FireballSpeed = 1;
-            bool cleanupFlag = true;
+            bool cleanupFlag = false;
             Vector3 _forward = forward (_spell.rotation);
+
             _spell.position += _forward * FireballSpeed;
-            ServerSend.Instance.SpellUpdate (_spell);
-            TimeSpan tmElapsed = DateTime.Now - _spell.spawnTime;
-            List<Client> items = new List<Client> ();
-            items.AddRange (Server.clients.Values);
+                       
             for (int i = 1; i <= ServerHandle.playersInGame; i++) {
                 try {
                     Vector3 playerPos = Server.clients[i].player.position;
+                    Player _player = Server.clients[i].player;
                     //TODO fix diz bug nul pointer.
                     if (playerPos != null) {
                         Vector3 distance = playerPos - _spell.position;
                         distance.Y = 0;                        
                         if (distance.Length () <= 2f && _spell.ownerId != Server.clients[i].player.id) {
                             Vector3 normDistance = noramlize(distance);
-                            Console.WriteLine(normDistance);
-                            Console.WriteLine(normDistance.Length());
-                            Server.clients[i].player.addVelocity (normDistance * (.8f + 0.2f * _spell.rank));
-                            Server.clients[i].player.dmg(5);
-                             spellsToRemove.Add (_spell);
-                             cleanupFlag = false;
+                            _player.addVelocity (normDistance * (.8f + 0.2f * _spell.rank));
+                            _player.dmg(5);
+                            cleanupFlag = true;
                         }
                     }
 
@@ -112,8 +108,11 @@ namespace GameServer {
                 }
 
             }
-            if (tmElapsed.TotalMilliseconds > 4000 && cleanupFlag) {
+            TimeSpan tmElapsed = DateTime.Now - _spell.spawnTime;
+            if (tmElapsed.TotalMilliseconds > 4000 || cleanupFlag) {
                 spellsToRemove.Add (_spell);
+            }else{
+                ServerSend.Instance.SpellUpdate (_spell);
             }
         }
         public static void Ligthning (Spell _spell) {

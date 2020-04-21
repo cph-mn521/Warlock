@@ -91,7 +91,6 @@ namespace GameServer {
                 _packet.Write (_player.getHp ());
                 _packet.Write (_player.position);
                 _packet.Write (_player.rotation);
-                _broadcast.addToBroadcast (_packet);
                 sendTCPData (_toClient, _packet);
             }
         }
@@ -103,15 +102,16 @@ namespace GameServer {
                 _packet.Write (_player.getHp ());
                 _packet.Write (_player.position);
                 _packet.Write (_player.rotation);
-                _broadcast.addToBroadcast (_packet);
                 SendTCPDataToAll (_packet);
             }
         }
 
-        public void PlayerPosition (Player _player) {
+        public void Player (Player _player) {
             using (Packet _packet = new Packet ((int) ServerPackets.playerPosition)) {
                 _packet.Write (_player.id);
                 _packet.Write (_player.position);
+                _packet.Write(_player.rotation);
+                _packet.Write(_player.getHp());
                 _broadcast.addToBroadcast(_packet);
                 SendUDPDataToAll (_packet);
             }
