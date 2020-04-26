@@ -5,12 +5,13 @@ namespace Server
 {
     public class SpellBook
     {
-        private List<Spellpage> pages;
-        private List<SpellType> MyIndex;
-        public bool CastSpell(int page){
+        private List<Spellpage> pages = new List<Spellpage>();
+        private List<SpellType> MyIndex = new List<SpellType>();
+        public bool CastSpell(int index){
             pages[index].cast();
+            return true;
         }
-        public Spell upgradeSpell(int page){
+        public void upgradeSpell(int index){
             pages[index].upgrade();
         }
         public void addSpell(SpellType type){
@@ -21,7 +22,12 @@ namespace Server
         }
 
         public void reset(){
-            
+
+        }
+
+        public SpellBook(){
+            MyIndex.Add(SpellType.Fireball);
+            pages.Add(new Spellpage(SpellType.Fireball));
         }
 
     }

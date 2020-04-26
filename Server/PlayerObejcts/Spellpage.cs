@@ -11,10 +11,13 @@ namespace GameServer
             
         }
     
-        public SpellObject CastSpell(){
+        public SpellObject cast(){
             return MySpellObject.toObject();
         }
 
+        public void upgrade(){
+            MySpellObject.rank = MySpellObject.rank+1;
+        }
 
         public void reset(){
             

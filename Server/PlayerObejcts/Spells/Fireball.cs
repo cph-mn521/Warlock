@@ -1,13 +1,18 @@
+using System;
 using System.Numerics;
 
 namespace GameServer
 {
     public class Fireball : SpellObject
     {
-
-        public void update()
+        public Fireball(int _owner) : base(_owner)
         {
-            //fireball Behaviour goes here :)
         }
+
+        public override void update()
+        {
+            Console.WriteLine("firebaaal");
+        }
+
     }
 }
