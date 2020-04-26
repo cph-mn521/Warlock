@@ -109,6 +109,9 @@ namespace GameServer {
         public void setVelocity (Vector3 _velocity) {
             Velocity = _velocity * HpScale ();
         }
+        public Vector3 getVelocity(){
+            return Velocity;
+        }
         public void dmg (float amount) {
             currentHP -= amount;
             if (currentHP <= 0 && !removed && Program.game.round) {

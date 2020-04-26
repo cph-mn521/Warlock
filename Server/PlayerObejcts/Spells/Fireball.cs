@@ -30,7 +30,7 @@ namespace GameServer {
                 if (playerPos != null) {
                     Vector3 distance = playerPos - position;
                     distance.Y = 0;
-                    if (distance.Length () <= 2f && owner != Server.clients[i].player.id) {
+                    if (distance.Length () <= 2f ) {
                         Vector3 normDistance = this.normalize (distance);
                         _player.addVelocity (normDistance * (.8f + 0.2f * rank));
                         _player.dmg (5);

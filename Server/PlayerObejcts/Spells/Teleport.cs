@@ -1,7 +1,8 @@
 using System.Numerics;
+using System;
 
 namespace GameServer {
-    public class Teleport : SpellObject, SpellTargetable {
+    public class Teleport : SpellObject {
 
 
         private int distancePrRank = 8;
@@ -13,12 +14,14 @@ namespace GameServer {
         public override void update () {
             Player _player = Server.clients[owner].player;
             Vector3 distance = target - _player.position;
-            
-            if (distance.Length () > distancePrRank * rank) {
-                distance = distance * (distancePrRank * rank / distance.Length ());
-            }
             distance.Y = 0;
-            _player.position = _player.position + distance;
+            if (distance.Length () > distancePrRank * rank) {
+                distance = normalize(distance)*distancePrRank*rank;
+                _player.position = _player.position + distance;
+            }else{
+                 _player.position=target;
+            }
+        
             Server.cleanUp.Add (this);
         }
     }

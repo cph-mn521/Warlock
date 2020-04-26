@@ -19,6 +19,7 @@ public class Spell : MonoBehaviour, IUseable {
         Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast (ray, out hit)) {
+            Debug.Log(hit.point);
             ClientSend.castSpell (slot, hit.point);
         }
         Debug.Log (slot);

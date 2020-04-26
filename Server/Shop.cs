@@ -19,6 +19,7 @@ namespace GameServer
         public Shop(){
             spellsForSale.Add(new Fireball(-1));
             spellsForSale.Add(new Teleport(-1));
+            spellsForSale.Add(new Dash(-1));
         }
 
         public void BuySpell(Player _player, int SpellId){

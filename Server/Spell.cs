@@ -8,7 +8,8 @@ namespace GameServer {
     public enum SpellType {
         Fireball = 1,
         Ligthning,
-        Teleport
+        Teleport,
+        Dash
     }
 
     public class Spell : updatable {
