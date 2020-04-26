@@ -1,5 +1,7 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 public class PlayerMovement : MonoBehaviour {
 
     float AngleBetweenTwoPoints (Vector3 a, Vector3 b) {
@@ -46,11 +48,11 @@ public class PlayerMovement : MonoBehaviour {
 
         Ray ray = _camera.ScreenPointToRay (Input.mousePosition);
         RaycastHit hit;
-
+        
+        
         if (Input.GetMouseButtonUp (0)) {
             if (Physics.Raycast (ray, out hit)) {
-                
-                if (!iscasting) {
+                if (!iscasting&& !EventSystem.current.IsPointerOverGameObject()) {
                     _animator.SetTrigger ("Cast2");
                     currentlyCasting = 0;
                     iscasting = true;
