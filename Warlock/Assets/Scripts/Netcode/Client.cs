@@ -196,7 +196,8 @@ public class Client : MonoBehaviour {
                {(int) ServerPackets.welcome, ClientHandle.Welcome},
                {(int) ServerPackets.spawnObject, ClientHandle.spawnObject},
                {(int) ServerPackets.updateObject, ClientHandle.updateObject},
-               {(int) ServerPackets.removeObject, ClientHandle.removeObject}
+               {(int) ServerPackets.removeObject, ClientHandle.removeObject},
+               {(int) ServerPackets.spellPurchase, ClientHandle.spellPurchase}
 
         };
         Debug.Log("Initialized packets");

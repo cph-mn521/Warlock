@@ -11,6 +11,7 @@
             private bool endGoofTime = false;
             private bool init = false;
 
+            public static List<SpellObject> spells2 =new List<SpellObject>();
             #endregion
             
             #region Constructor and Constructor params
@@ -39,21 +40,7 @@
             }
 
             private void gameRound () {
-                foreach (Client _client in Server.clients.Values) {
-                    if (_client.player != null) {
-                        _client.player.Update ();
-                    }
-                }
-                foreach (Spell _spell in Spell.AllSpells) {
-                    _spell.update ();
-                }
-                #region Cleanup
-                foreach (updatable _object in Server.cleanUp) {
-                    ServerSend.Instance.removeObject(_object);
-
-                }
-                Server.cleanUp = new List<updatable>();
-                #endregion
+                GameLoop();
 
                 if (players == deadPlayers + 1) {
                     Console.WriteLine ("time to restart round");
@@ -69,25 +56,9 @@
             }
 
             private void goofTime () {
-                foreach (Spell _spell in Spell.AllSpells) {
-                    _spell.update ();
-                }
-
-                foreach (Client _client in Server.clients.Values) {
-                    if (_client.player != null) {
-                        _client.player.Update ();
-                    }
-                }
                 
-                #region Cleanup
-                foreach (updatable _object in Server.cleanUp) {
-                    ServerSend.Instance.removeObject(_object);
-
-                }
-                Server.cleanUp = new List<updatable>();
-                #endregion
+                GameLoop();
                 if (players > 1) {
-
                     if (!endGoofTime) {
                         Console.WriteLine ("more than 2 players, restarting in 10 sec");
                         time = DateTime.Now;
@@ -108,6 +79,29 @@
                 }
 
                 ThreadManager.UpdateMain ();
+            }
+
+
+            private void GameLoop(){
+                                foreach (SpellObject _spell in GameLogic.spells2) {
+                    _spell.update ();
+                    
+                }
+                foreach (Client _client in Server.clients.Values) {
+                    if (_client.player != null) {
+                        _client.player.Update ();
+                    }
+                }
+                #region Cleanup
+                foreach (updatable _object in Server.cleanUp) {
+                    ServerSend.Instance.removeObject(_object);
+                    if(_object is SpellObject){
+                        spells2.Remove(_object as SpellObject);
+                    }
+
+                }
+                Server.cleanUp = new List<updatable>();
+                #endregion
             }
 
             #region helpfunctions

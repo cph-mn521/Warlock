@@ -76,10 +76,12 @@ public class GameManager : MonoBehaviour {
         Shop.setGold(playerGold);
         // Because price of items is fixed, this doesnt need to change.
     }
-    public void addSpell(int slot, int ShopIndex,int playerGold,int price,int newPrice){
+    public void addSpell(int slot, int ShopIndex,int playerGold){
         Shop.addSpell(slot,ShopIndex);
         Shop.setGold(playerGold);
-        Shop.updatePrices(ShopIndex,newPrice);
+
+        //TODO: Implement shop prices so players can se value of an item....
+        Shop.updatePrices(ShopIndex,0);
     }
 
 

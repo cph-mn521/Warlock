@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
@@ -18,9 +19,9 @@ public class UIManager : MonoBehaviour {
     public InputField usernameField;
 
     void Start () {
-        action1 = KeyCode.Alpha1;
-        action2 = KeyCode.Alpha2;
-        action3 = KeyCode.Alpha3;
+        action1 = KeyCode.Mouse0;
+        action2 = KeyCode.Space;
+        action3 = KeyCode.Mouse1;
     }
     private void Awake () {
         Shop.SetActive (false);
@@ -63,13 +64,17 @@ public class UIManager : MonoBehaviour {
 
         }
         if (Input.GetKeyDown (action1)) {
-            ActionButtonClick (0);
+            if(!EventSystem.current.IsPointerOverGameObject()){
+                ActionButtonClick (0);
+            }
         }
         if (Input.GetKeyDown (action2)) {
             ActionButtonClick (1);
         }
         if (Input.GetKeyDown (action3)) {
-            ActionButtonClick (2);
+            if(!EventSystem.current.IsPointerOverGameObject()){
+                ActionButtonClick (2);
+            }
         }
     }
 

@@ -10,12 +10,15 @@ namespace GameServer {
 
         public static int Port { get; private set; }
 
+        
         public static Dictionary<int, Client> clients = new Dictionary<int, Client> ();
 
         public delegate void PacketHandler (int _fromClient, Packet _packet);
         public static Dictionary<int, PacketHandler> PacketHandlers;
 
         public static List<updatable> cleanUp = new List<updatable>(); 
+
+
 
         private static TcpListener tcpListener;
         private static UdpClient udpListener;
@@ -97,7 +100,8 @@ namespace GameServer {
 
                 {(int) ClientPackets.welcomeReceived, ServerHandle.welcomReceived }, 
                 {(int) ClientPackets.playerMovement, ServerHandle.playerMovement },
-                {(int) ClientPackets.playerCast, ServerHandle.playerCast }
+                {(int) ClientPackets.playerCast, ServerHandle.playerCast2 },
+                {(int) ClientPackets.requestBuySpell,ServerHandle.requestBuySpell}
 
             };
             Console.WriteLine ("Initialized packets.");

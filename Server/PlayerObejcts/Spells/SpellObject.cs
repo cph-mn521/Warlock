@@ -12,14 +12,26 @@ namespace GameServer {
 
         public int type { get { return 2; } }
 
+        private Vector3 MyTarget;
+        public Vector3 target { get { return MyTarget; } set { MyTarget = value; } }
+
         private int MyId;
         public int id { get { return MyId; } set { MyId = value; } }
 
         private Vector3 MyPosition;
         public Vector3 position { get { return MyPosition; } set { MyPosition = value; } }
 
+        private Vector3 MyOfset = new Vector3 (0, 1, 0);
+        public Vector3 offset { get { return MyOfset; } set { MyOfset = value; } }
+
+        private float MyOffsetScalar = 0f;
+        public float OffsetScalar { get { return MyOffsetScalar; } set { MyOffsetScalar = value; } }
+
         private Quaternion MyRotation;
         public Quaternion rotation { get { return MyRotation; } set { MyRotation = value; } }
+
+        private DateTime MyCastTime;
+        public DateTime CastTime { get { return MyCastTime; } set { MyCastTime = value; } }
 
         public SpellObject (int _owner) {
             owner = _owner;
@@ -30,9 +42,23 @@ namespace GameServer {
             clone.owner = owner;
             clone.rank = rank;
             clone.spellType = spellType;
+            clone.OffsetScalar = OffsetScalar;
+            clone.rotation = Server.clients[owner].player.rotation;
+            clone.position = Server.clients[owner].player.position + this.offset;
+            clone.position += clone.forward () * OffsetScalar;
+            clone.CastTime = DateTime.Now;
             return clone;
         }
-
-        public abstract void update();
+        public Vector3 forward () {
+            //forward vector:
+            float x = 2 * (rotation.X * rotation.Z + rotation.W * rotation.Y);
+            float z = 1 - 2 * (rotation.X * rotation.X + rotation.Y * rotation.Y);
+            return new Vector3 (x, 0, z);
+        }
+        public Vector3 normalize (Vector3 vector) {
+            Vector3 o = vector / vector.Length ();
+            return o;
+        }
+        public abstract void update ();
     }
 }

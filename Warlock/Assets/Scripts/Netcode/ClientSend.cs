@@ -45,8 +45,7 @@ public class ClientSend : MonoBehaviour {
 
     public static void buySpell(int spellNr)
     {
-        using (Packet _packet = new Packet ((int) ClientPackets.playerMovement)) {
-            _packet.Write(Client.instance.myId);
+        using (Packet _packet = new Packet ((int) ClientPackets.requestBuySpell)) {
             _packet.Write(spellNr);
              sendTCPData(_packet);
         }

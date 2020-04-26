@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour {
         Ray ray = _camera.ScreenPointToRay (Input.mousePosition);
         RaycastHit hit;
         
-        
+        /*
         if (Input.GetMouseButtonUp (0)) {
             if (Physics.Raycast (ray, out hit)) {
                 if (!iscasting&& !EventSystem.current.IsPointerOverGameObject()) {
@@ -87,6 +87,7 @@ public class PlayerMovement : MonoBehaviour {
             ClientSend.castSpell (currentlyCasting, point);
             iscasting = false;
         }
-    }
 
+    */
+    }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using Server;
 
 namespace GameServer {
     public class Player : updatable {
@@ -11,6 +12,8 @@ namespace GameServer {
             get { return MyId; }
             set { MyId = value; }
         }
+
+        public int gold=100;
 
         private Vector3 MyPosition;
         public Vector3 position{
@@ -30,6 +33,8 @@ namespace GameServer {
         public string username;
 
         //TODO: Add a list with a players spells and cooldowns.
+        public SpellBook spellBook;
+
 
         public bool removed;
 
@@ -64,6 +69,7 @@ namespace GameServer {
             maxHp = 100;
             currentHP = 100;
             removed = false;
+            spellBook = new SpellBook(id);
         }
 
         public void Update () {
