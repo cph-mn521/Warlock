@@ -10,5 +10,7 @@ namespace GameServer
         int rank{get;} 
         int owner{get;set;}
         SpellType spellType{get;}
+
+        
     }
 }
