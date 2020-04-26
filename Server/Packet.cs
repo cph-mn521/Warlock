@@ -7,15 +7,12 @@
         /// <summary>Sent from server to client.</summary>
         public enum ServerPackets {
             welcome = 1,
-            serverBroadcast,
-            spawnPlayer,
-            spawnSpell,
-            playerPosition,
-            playerRotation,
-            SpellUpdate,
-            removeSpell,
-            playerHp,
-            playerDespawn
+            spawnObject,
+            updateObject,
+            removeObject,
+            playerAnimation,
+            itemPurchase,
+            spellPurchase
 
         }
 
@@ -23,10 +20,11 @@
         public enum ClientPackets {
             welcomeReceived = 1,
             playerMovement,
-
-            playerCast
-
-
+            playerCast,
+            playerInput,
+            requestBuyItem,
+            requestBuySpell,
+            stopCast
         }
 
         public class Packet : IDisposable {

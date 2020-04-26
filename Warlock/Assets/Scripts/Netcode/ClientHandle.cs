@@ -14,88 +14,71 @@ public class ClientHandle : MonoBehaviour {
 
         Client.instance.udp.Connect (((IPEndPoint) Client.instance.tcp.socket.Client.LocalEndPoint).Port);
     }
-    public static void SpawnPlayer (Packet _packet) {
-        Debug.Log ("spawning a player");
-        int _id = _packet.ReadInt ();
-        string _username = _packet.ReadString ();
-        float _hp = _packet.ReadFloat();
-        Vector3 _position = _packet.ReadVector3 ();
-        Debug.Log (_position);
-        Quaternion _rotation = _packet.ReadQuaternion ();
-        GameManager.instance.spawnPlayer (_id, _username,_hp, _position, _rotation);
-    }
 
-    public static void playerHp (Packet _packet) {
-        int _id = _packet.ReadInt ();
-        float _hp = _packet.ReadFloat ();
-        try {
-            GameManager.players[_id].health=_hp;
-            Debug.Log(_hp);
-
-        } catch (System.Exception ex) {
-
-            Debug.Log ("No player found yet:" + ex.Message);
-        }
-    }
-
-    public static void despawnPlayer(Packet _packet){
-        int _id = _packet.ReadInt();
-        GameManager.instance.removePlayer(_id);
-    }
-    public static void playerPosition (Packet _packet) {
+    public static void spawnObject (Packet _packet) {
+        int spawnType = _packet.ReadInt ();
         int _id = _packet.ReadInt ();
         Vector3 _position = _packet.ReadVector3 ();
-        //Vector3 _velocity = _packet.ReadVector3();    
-        try {
-            GameManager.players[_id].position = _position;
-
-        } catch (System.Exception ex) {
-
-            Debug.Log ("No player found yet:" + ex.Message);
-        }
-
-        //GameManager.players[_id].rigidbody.velocity = _velocity;
-    }
-    public static void playerRotation (Packet _packet) {
-        int _id = _packet.ReadInt ();
         Quaternion _rotation = _packet.ReadQuaternion ();
-        try {
-            GameManager.players[_id].transform.rotation = _rotation;
-        } catch (System.Exception ex) {
-
-            Debug.Log ("No player found yet:" + ex.Message);
+        switch (spawnType) {
+            case 1: //Player spawn
+                string _username = _packet.ReadString ();
+                float _hp = _packet.ReadFloat ();
+                GameManager.instance.spawnPlayer (_id, _username, _hp, _position, _rotation);
+                break;
+            case 2: //Spell Spawn
+                int _type = _packet.ReadInt ();
+                GameManager.instance.spawnSpell (_id, _position, _rotation, _type);
+                break;
+            default:
+                break;
         }
 
     }
 
-    public static void SpellUpdate (Packet _packet) {
+    public static void updateObject (Packet _packet) {
+        int updateType = _packet.ReadInt ();
         int _id = _packet.ReadInt ();
         Vector3 _position = _packet.ReadVector3 ();
         Quaternion _rotation = _packet.ReadQuaternion ();
-        try {
-            Debug.Log ($"Spell {_id} moved to {_position}");
-            GameManager.spells[_id].position = _position;
-            GameManager.spells[_id].transform.rotation = _rotation;
-        } catch (System.Exception ex) {
-
-            Debug.Log ("No spell found yet:" + ex.Message);
+        switch (updateType) {
+            case 1: //Player Update
+                float _hp = _packet.ReadFloat ();
+                GameManager.players[_id].health = _hp;
+                GameManager.players[_id].position = _position;
+                if (Client.instance.myId != _id) {
+                    GameManager.players[_id].transform.rotation = _rotation;
+                }
+                break;
+            case 2:
+                GameManager.spells[_id].position = _position;
+                GameManager.spells[_id].transform.rotation = _rotation;
+                break;
+            default:
+                break;
         }
-
     }
 
-    public static void spawnSpell (Packet _packet) {
+    public static void removeObject (Packet _packet) {
+        int removeType = _packet.ReadInt ();
         int _id = _packet.ReadInt ();
-        int _type = _packet.ReadInt ();
-        Debug.Log ($"spawning a spell, type {_type}");
-        Vector3 _position = _packet.ReadVector3 ();
-        Quaternion _rotation = _packet.ReadQuaternion ();
-        GameManager.instance.spawnSpell (_id, _position, _rotation, _type);
+        switch (removeType) {
+            case 1:
+                GameManager.instance.removePlayer (_id);
+                break;
+            case 2:
+                GameManager.instance.removeSpell (_id);
+                break;
+            default:
+                break;
+        }
     }
 
-    public static void removeSpell (Packet _packet) {
-        int _id = _packet.ReadInt ();
-        Debug.Log ($"Time to kille projectile {_id}");
-        GameManager.instance.removeSpell (_id);
+    public static void itemPurchase (Packet _packet) {
+        // GameManager.instance.addItem();
+    }
+    public static void spellPurchase (Packet _packet) {
+        // GameManager.instance.addSpell();
     }
 
 }

@@ -4,15 +4,32 @@ using System.Numerics;
 using System.Text;
 
 namespace GameServer {
-    public class Player {
-        public int id;
+    public class Player : updatable {
+        #region Interfaces
+        private int MyId;
+        public int id {
+            get { return MyId; }
+            set { MyId = value; }
+        }
+
+        private Vector3 MyPosition;
+        public Vector3 position{
+            get{return MyPosition;}
+            set{MyPosition = value;}
+        }
+        private Quaternion MyRotation;
+        public Quaternion rotation{
+            get{return MyRotation;}
+            set{MyRotation = value;}
+        }
+        public int type{
+            get{return 1;}
+        }
+        #endregion
+
         public string username;
-        public Vector3 position;
-        public Quaternion rotation;
 
         //TODO: Add a list with a players spells and cooldowns.
-
-        public static List<Player> playersToDespawn = new List<Player> ();
 
         public bool removed;
 
@@ -28,6 +45,8 @@ namespace GameServer {
         private Vector3 Velocity;
 
         private float moveSpeed = 5f / Constants.TICKS_PR_SEC;
+
+
         public Player (int _id, string _username, Vector3 _pos) {
             id = _id;
             username = _username;
@@ -51,19 +70,16 @@ namespace GameServer {
             if (!removed) {
                 Move ();
                 addDrag ();
-                if (position.Length () > Program.game.mapSize )  {
+                if (position.Length () > Program.game.mapSize) {
                     dmg (0.5f);
-
                 }
             }
+            ServerSend.Instance.updateObject(this);
 
         }
-
         private void Move () {
             position += inputs * moveSpeed;
             position += Velocity;
-            ServerSend.Instance.PlayerPosition (this);
-            ServerSend.Instance.PlayerRotation (this);
         }
 
         private void addDrag () {
@@ -89,11 +105,10 @@ namespace GameServer {
         }
         public void dmg (float amount) {
             currentHP -= amount;
-            ServerSend.Instance.PlayerHp (this);
             if (currentHP <= 0 && !removed && Program.game.round) {
-                playersToDespawn.Add (this);
+                Server.cleanUp.Add(this);
                 removed = true;
-                Program.game.deadPlayers +=1;
+                Program.game.deadPlayers += 1;
             }
         }
         public void changeMaxHp (float amount) {
@@ -101,10 +116,10 @@ namespace GameServer {
         }
 
         private float HpScale () {
-            return  1+(1-currentHP/maxHp);
+            return 1 + (1 - currentHP / maxHp);
         }
 
-        public void resetHp(){
+        public void resetHp () {
             currentHP = maxHp;
         }
 

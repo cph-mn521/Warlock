@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,6 +33,35 @@ public class ClientSend : MonoBehaviour {
             sendUDPData (_packet);
         }
     }
+
+    public static void buyItem(int itemNr)
+    {
+        using (Packet _packet = new Packet ((int) ClientPackets.playerMovement)) {
+            _packet.Write (Client.instance.myId);
+            _packet.Write(itemNr);
+            sendTCPData(_packet);
+        }
+    }
+
+    public static void buySpell(int spellNr)
+    {
+        using (Packet _packet = new Packet ((int) ClientPackets.playerMovement)) {
+            _packet.Write(Client.instance.myId);
+            _packet.Write(spellNr);
+             sendTCPData(_packet);
+        }
+    }
+    
+
+    public static void sendInputPackage(InputPackage input)
+    {
+        using (Packet _packet = new Packet ((int) ClientPackets.playerMovement)) {
+            _packet.Write(input.Movement);
+            _packet.Write(input.Rotation);
+            sendUDPData (_packet);
+        }
+    }
+
     public static void castSpell (int slot, Vector3 target) {
         using (Packet _packet = new Packet ((int) ClientPackets.playerCast)) {
             _packet.Write (slot);

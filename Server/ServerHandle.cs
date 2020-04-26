@@ -21,8 +21,8 @@
                 Vector3 _inputs = _packet.ReadVector3();
                 Quaternion _rotation = _packet.ReadQuaternion();
                 Server.clients[_fromClient].player.SetInput(_inputs,_rotation);
-            }
-            
+            }            
+                        
             public static void playerCast(int _fromClient, Packet _packet){ // Race Conditions.
                 Player p = Server.clients[_fromClient].player;
                 if(p.removed){
@@ -40,7 +40,7 @@
                         Spell.AllSpells.Add(_spell);
                         Spell.spellCount =Spell.spellCount+1;
                         p.LastCast[slot] = DateTime.Now;
-                        ServerSend.Instance.SpawnSpell(_spell);
+                        ServerSend.Instance.spawnObject(_spell);
                         
                     }
                 }

@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour {
     public GameObject playerPrefab;
     public GameObject FireballPrefab;
 
+    public ShopInterface Shop;
+
+
     private void Awake () {
         if (instance == null) {
             instance = this;
@@ -67,4 +70,17 @@ public class GameManager : MonoBehaviour {
         Destroy(players[id].transform.GetChild (1).gameObject);
         players.Remove(id);
     }
+
+    public void addItem(int ItemNr,int playerGold){
+        Shop.addItem(ItemNr);
+        Shop.setGold(playerGold);
+        // Because price of items is fixed, this doesnt need to change.
+    }
+    public void addSpell(int slot, int ShopIndex,int playerGold,int price,int newPrice){
+        Shop.addSpell(slot,ShopIndex);
+        Shop.setGold(playerGold);
+        Shop.updatePrices(ShopIndex,newPrice);
+    }
+
+
 }

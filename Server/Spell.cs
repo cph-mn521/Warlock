@@ -11,10 +11,30 @@ namespace GameServer {
         Teleport
     }
 
-    public class Spell {
-        public static List<Spell> AllSpells = new List<Spell> ();
+    public class Spell : updatable {
+        #region Interfaces
+        private int MyId;
+        public int id {
+            get { return MyId; }
+            set { MyId = value; }
+        }
 
-        public static List<Spell> spellsToRemove = new List<Spell> ();
+        private Vector3 MyPosition;
+        public Vector3 position {
+            get { return MyPosition; }
+            set { MyPosition = value; }
+        }
+        private Quaternion MyRotation;
+        public Quaternion rotation {
+            get { return MyRotation; }
+            set { MyRotation = value; }
+        }
+        public int type {
+            get { return 2; }
+        }
+        #endregion
+
+        public static List<Spell> AllSpells = new List<Spell> ();
 
         public static int spellCount = 1;
         public delegate void SpellBehavior (Spell _spell);
@@ -22,11 +42,11 @@ namespace GameServer {
         //TODO:: Initialize!
         public static Dictionary<int, SpellBehavior> SpellHandlers;
 
-        public int id, rank, ownerId;
-        public Vector3 position;
-        public Quaternion rotation;
-        public SpellType type;
+        public int rank, ownerId;
+
         public Vector3 target;
+
+        public SpellType spellType;
 
         public DateTime spawnTime;
 
@@ -34,9 +54,9 @@ namespace GameServer {
             id = _id;
             rank = _rank;
             ownerId = _ownerId;
-            type = _type;
+            spellType = _type;
             position = _position;
-            position.Y = 1;
+            MyPosition.Y = 1;
             rotation = _rotation;
             spawnTime = DateTime.Now;
         }
@@ -44,16 +64,16 @@ namespace GameServer {
             id = _id;
             rank = _rank;
             ownerId = _ownerId;
-            type = _type;
+            spellType = _type;
             position = _position;
-            position.Y = 1;
+            MyPosition.Y = 1;
             rotation = _rotation;
             target = _target;
             spawnTime = DateTime.Now;
         }
 
         public void update () {
-            SpellHandlers[(int) this.type] (this);
+            SpellHandlers[(int) this.spellType] (this);
         }
 
         private static Vector3 forward (Quaternion _rotation) {
@@ -62,8 +82,8 @@ namespace GameServer {
             float z = 1 - 2 * (_rotation.X * _rotation.X + _rotation.Y * _rotation.Y);
             return new Vector3 (x, 0, z);
         }
-        private static Vector3 noramlize(Vector3 vector){
-            Vector3 o =vector/vector.Length();
+        private static Vector3 noramlize (Vector3 vector) {
+            Vector3 o = vector / vector.Length ();
             return o;
         }
 
@@ -71,9 +91,9 @@ namespace GameServer {
             SpellHandlers = new Dictionary<int, SpellBehavior> () {
                 {
                 (int) SpellType.Fireball, Fireball
-                },
-                {
-                (int) SpellType.Teleport, Teleport
+                }, {
+                (int) SpellType.Teleport,
+                Teleport
                 }
             };
         }
@@ -85,7 +105,7 @@ namespace GameServer {
             Vector3 _forward = forward (_spell.rotation);
 
             _spell.position += _forward * FireballSpeed;
-                       
+
             for (int i = 1; i <= ServerHandle.playersInGame; i++) {
                 try {
                     Vector3 playerPos = Server.clients[i].player.position;
@@ -93,11 +113,11 @@ namespace GameServer {
                     //TODO fix diz bug nul pointer.
                     if (playerPos != null) {
                         Vector3 distance = playerPos - _spell.position;
-                        distance.Y = 0;                        
+                        distance.Y = 0;
                         if (distance.Length () <= 2f && _spell.ownerId != Server.clients[i].player.id) {
-                            Vector3 normDistance = noramlize(distance);
+                            Vector3 normDistance = noramlize (distance);
                             _player.addVelocity (normDistance * (.8f + 0.2f * _spell.rank));
-                            _player.dmg(5);
+                            _player.dmg (5);
                             cleanupFlag = true;
                         }
                     }
@@ -110,9 +130,9 @@ namespace GameServer {
             }
             TimeSpan tmElapsed = DateTime.Now - _spell.spawnTime;
             if (tmElapsed.TotalMilliseconds > 4000 || cleanupFlag) {
-                spellsToRemove.Add (_spell);
-            }else{
-                ServerSend.Instance.SpellUpdate (_spell);
+                Server.cleanUp.Add (_spell);
+            } else {
+                ServerSend.Instance.updateObject (_spell);
             }
         }
         public static void Ligthning (Spell _spell) {
@@ -120,16 +140,15 @@ namespace GameServer {
         }
         public static void Teleport (Spell _spell) {
             Player _player = Server.clients[_spell.ownerId].player;
-            Vector3 distance = _spell.target-_player.position;
+            Vector3 distance = _spell.target - _player.position;
             int distancePrRank = 8;
-            if(distance.Length() > distancePrRank*_spell.rank){
-                distance = distance * (distancePrRank*_spell.rank/distance.Length());
+            if (distance.Length () > distancePrRank * _spell.rank) {
+                distance = distance * (distancePrRank * _spell.rank / distance.Length ());
             }
-            Console.WriteLine(_spell.target);
-            distance.Y=0;
-            _player.position = _player.position+distance;
-            spellsToRemove.Add (_spell);
-
+            Console.WriteLine (_spell.target);
+            distance.Y = 0;
+            _player.position = _player.position + distance;
+            Server.cleanUp.Add (_spell);
 
         }
         #endregion

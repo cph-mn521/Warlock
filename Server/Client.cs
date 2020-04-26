@@ -139,14 +139,14 @@ namespace GameServer {
             foreach (Client _client in Server.clients.Values) {
                 if (_client.player != null) {
                     if (_client.id != id) {
-                        ServerSend.Instance.SpawnPlayer (id, _client.player);
+                        ServerSend.Instance.spawnObject( _client.player);
                     }
                 }
 
             }
             foreach (Client _client in Server.clients.Values) {
                 if (_client.player != null) {
-                    ServerSend.Instance.SpawnPlayer (_client.id, player);
+                    ServerSend.Instance.spawnObject (player);
                 }
             }
         }

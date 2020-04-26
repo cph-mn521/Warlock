@@ -48,24 +48,17 @@
                     _spell.update ();
                 }
                 #region Cleanup
-                foreach (Spell _spell in Spell.spellsToRemove) {
-                    ServerSend.Instance.removeSpell (_spell);
-                    Spell.AllSpells.Remove (_spell);
-                }
-
-                foreach (Player _player in Player.playersToDespawn) {
-                    ServerSend.Instance.DespawnPlayer (_player);
+                foreach (updatable _object in Server.cleanUp) {
+                    ServerSend.Instance.removeObject(_object);
 
                 }
-
-                Spell.spellsToRemove = new List<Spell> ();
-                Player.playersToDespawn = new List<Player> ();
+                Server.cleanUp = new List<updatable>();
                 #endregion
 
                 if (players == deadPlayers + 1) {
                     Console.WriteLine ("time to restart round");
                     for (int i = 1; i <= ServerHandle.playersInGame; i++) {
-                        ServerSend.Instance.DespawnPlayer (Server.clients[i].player);
+                         ServerSend.Instance.removeObject(Server.clients[i].player);
                         Wait(DateTime.Now,2000);
                     }
                     init = true;
@@ -76,20 +69,22 @@
             }
 
             private void goofTime () {
+                foreach (Spell _spell in Spell.AllSpells) {
+                    _spell.update ();
+                }
+
                 foreach (Client _client in Server.clients.Values) {
                     if (_client.player != null) {
                         _client.player.Update ();
                     }
                 }
-                foreach (Spell _spell in Spell.AllSpells) {
-                    _spell.update ();
-                }
+                
                 #region Cleanup
-                foreach (Spell _spell in Spell.spellsToRemove) {
-                    ServerSend.Instance.removeSpell (_spell);
-                    Spell.AllSpells.Remove (_spell);
+                foreach (updatable _object in Server.cleanUp) {
+                    ServerSend.Instance.removeObject(_object);
+
                 }
-                Spell.spellsToRemove = new List<Spell> ();
+                Server.cleanUp = new List<updatable>();
                 #endregion
                 if (players > 1) {
 
@@ -107,7 +102,7 @@
                     init = true;
                     endGoofTime = false;
                     for (int i = 1; i <= ServerHandle.playersInGame; i++) {
-                        ServerSend.Instance.DespawnPlayer (Server.clients[i].player);
+                        ServerSend.Instance.removeObject (Server.clients[i].player);
                         Wait(DateTime.Now,2000);                        
                     }
                 }
@@ -123,7 +118,7 @@
                     Server.clients[i].player.removed = false;
                     Server.clients[i].player.resetHp ();
                     deadPlayers = 0;
-                    ServerSend.Instance.SpawnPlayer (Server.clients[i].player);
+                   ServerSend.Instance.spawnObject(Server.clients[i].player);
                 }
                 init = false;
                 

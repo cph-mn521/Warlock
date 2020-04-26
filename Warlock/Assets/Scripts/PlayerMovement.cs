@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour {
     private DateTime castStart;
     private float delay;
 
-
+    private InputPackage myInputs = new InputPackage();
 
     void FixedUpdate () {
 
@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour {
         float z = Input.GetAxisRaw ("Vertical");
 
         Vector3 movement = new Vector3 (x, 0.0f, z);
+        myInputs.Movement = movement;
         //rb.AddForce(movement * movementSpeed * Time.deltaTime, ForceMode.VelocityChange);
 
         #endregion
@@ -38,15 +39,17 @@ public class PlayerMovement : MonoBehaviour {
         float angle = -AngleBetweenTwoPoints (positionOnScreen, mouseOnScreen);
         transform.rotation = Quaternion.Euler (new Vector3 (0f, angle + -90f, 0f));
 
-        Ray ray = _camera.ScreenPointToRay (Input.mousePosition);
-        RaycastHit hit;
-        
+        myInputs.Rotation = transform.rotation;
 
         #endregion        
-        ClientSend.PlayerMovement (movement);
+        ClientSend.sendInputPackage (myInputs);
+
+        Ray ray = _camera.ScreenPointToRay (Input.mousePosition);
+        RaycastHit hit;
 
         if (Input.GetMouseButtonUp (0)) {
-            if (Physics.Raycast (ray, out hit)) {            
+            if (Physics.Raycast (ray, out hit)) {
+                
                 if (!iscasting) {
                     _animator.SetTrigger ("Cast2");
                     currentlyCasting = 0;
@@ -58,7 +61,7 @@ public class PlayerMovement : MonoBehaviour {
         }
         if (Input.GetKey ("space")) {
             if (Physics.Raycast (ray, out hit)) {
-                
+
                 if (!iscasting) {
                     _animator.SetTrigger ("Cast1");
                     currentlyCasting = 1;
@@ -70,17 +73,16 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
         if (Physics.Raycast (ray, out hit)) {
-            CastSpell(hit.point);
+            CastSpell (hit.point);
         }
-        
 
     }
 
-    private void CastSpell ( Vector3 point) {
+    private void CastSpell (Vector3 point) {
 
         TimeSpan tmElapsed = DateTime.Now - castStart;
         if (iscasting && tmElapsed.TotalMilliseconds > delay) {
-            ClientSend.castSpell (currentlyCasting, point);           
+            ClientSend.castSpell (currentlyCasting, point);
             iscasting = false;
         }
     }

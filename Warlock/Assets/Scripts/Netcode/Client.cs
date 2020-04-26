@@ -194,15 +194,9 @@ public class Client : MonoBehaviour {
     private void InitializeClientData () {
         packetHandlers = new Dictionary<int, PacketHandler> () { 
                {(int) ServerPackets.welcome, ClientHandle.Welcome},
-               {(int)ServerPackets.spawnPlayer, ClientHandle.SpawnPlayer},
-               {(int)ServerPackets.playerPosition, ClientHandle.playerPosition},
-               {(int)ServerPackets.playerRotation, ClientHandle.playerRotation},
-               {(int)ServerPackets.spawnSpell, ClientHandle.spawnSpell},
-               {(int)ServerPackets.SpellUpdate, ClientHandle.SpellUpdate},
-               {(int)ServerPackets.removeSpell, ClientHandle.removeSpell},
-               {(int)ServerPackets.playerHp,ClientHandle.playerHp},
-               {(int)ServerPackets.playerDespawn,ClientHandle.despawnPlayer}
-
+               {(int) ServerPackets.spawnObject, ClientHandle.spawnObject},
+               {(int) ServerPackets.updateObject, ClientHandle.updateObject},
+               {(int) ServerPackets.removeObject, ClientHandle.removeObject}
 
         };
         Debug.Log("Initialized packets");
