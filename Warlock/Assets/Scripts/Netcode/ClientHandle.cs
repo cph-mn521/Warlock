@@ -67,7 +67,7 @@ public class ClientHandle : MonoBehaviour {
                 GameManager.instance.removePlayer (_id);
                 break;
             case 2:
-                Debug.Log("removing spell" + _id);
+                Debug.Log ("removing spell" + _id);
                 GameManager.instance.removeSpell (_id);
                 break;
             default:
@@ -76,14 +76,17 @@ public class ClientHandle : MonoBehaviour {
     }
 
     public static void itemPurchase (Packet _packet) {
-        
-    }
-    
-    public static void spellPurchase (Packet _packet) {
-        int shopIndex = _packet.ReadInt();
+        int shopIndex = _packet.ReadInt ();
         int Slot = _packet.ReadInt();
-        int gold = _packet.ReadInt();
-        GameManager.instance.addSpell(Slot, shopIndex, gold);
+        int gold = _packet.ReadInt ();
+        GameManager.instance.addItem(Slot, shopIndex, gold);
+    }
+
+    public static void spellPurchase (Packet _packet) {
+        int shopIndex = _packet.ReadInt ();
+        int Slot = _packet.ReadInt ();
+        int gold = _packet.ReadInt ();
+        GameManager.instance.addSpell (Slot, shopIndex, gold);
     }
 
 }

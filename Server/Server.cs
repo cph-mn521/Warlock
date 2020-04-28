@@ -101,7 +101,8 @@ namespace GameServer {
                 {(int) ClientPackets.welcomeReceived, ServerHandle.welcomReceived }, 
                 {(int) ClientPackets.playerMovement, ServerHandle.playerMovement },
                 {(int) ClientPackets.playerCast, ServerHandle.playerCast2 },
-                {(int) ClientPackets.requestBuySpell,ServerHandle.requestBuySpell}
+                {(int) ClientPackets.requestBuySpell,ServerHandle.requestBuySpell},
+                {(int) ClientPackets.requestBuyItem,ServerHandle.requestBuyItem}
 
             };
             Console.WriteLine ("Initialized packets.");

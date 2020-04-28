@@ -134,6 +134,8 @@ namespace GameServer {
 
         public void SendIntoGame (string _PlayerName) {
             player = new Player (id, _PlayerName, new Vector3 (0, 0, 0));
+            player.backpack = new Backpack(player);
+            
             Program.game.players += 1;
             Console.WriteLine (Program.game.players);
             foreach (Client _client in Server.clients.Values) {

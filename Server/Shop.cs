@@ -13,10 +13,20 @@ namespace GameServer
         private List<SpellObject> spellsForSale = new List<SpellObject>();
 
         public void buyItem(Player _player, int ItemId){
-
+            Item chosen = itemsForSale[ItemId];
+            if(_player.gold >= chosen.price && _player.backpack.hasSpace() ){
+                int slot =  _player.backpack.addItem(chosen);
+                _player.gold -= chosen.price;
+                ServerSend.Instance.itemPurchase(_player.id,ItemId,slot,_player.gold);
+            }
         }
 
         public Shop(){
+            itemsForSale.Add(new SturdyVest());
+            itemsForSale.Add(new HeavyChest());
+            itemsForSale.Add(new SturdyBoots());
+            itemsForSale.Add(new MagicAmulet());
+
             spellsForSale.Add(new Fireball(-1));
             spellsForSale.Add(new Teleport(-1));
             spellsForSale.Add(new Dash(-1));
@@ -40,6 +50,5 @@ namespace GameServer
                 }
             }
         }
-
     }
 }

@@ -2,10 +2,8 @@ namespace GameServer
 {
     public interface Item
     {   
-
-         int hp{get;}
-         int weight{get;}
-         int resistance{get;}
-         int value{get;}
+        int price{get;}
+        string name{get;}
+        Stats stats{get;}
     }
 }

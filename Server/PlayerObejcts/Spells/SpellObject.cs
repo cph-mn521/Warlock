@@ -30,8 +30,20 @@ namespace GameServer {
         private Quaternion MyRotation;
         public Quaternion rotation { get { return MyRotation; } set { MyRotation = value; } }
 
-        private DateTime MyCastTime;
-        public DateTime CastTime { get { return MyCastTime; } set { MyCastTime = value; } }
+        private float MyCastTime;
+        public float CastTime { get { return MyCastTime; } set { MyCastTime = value; } }
+
+        private float MyCooldown;
+        public float Cooldown { get { return MyCooldown; } set { MyCooldown = value; } }
+
+        private DateTime MyLastCast;
+        public DateTime LastCast { get { return MyLastCast; } set { MyLastCast = value; } }
+
+        private DateTime MySpawnTime;
+        public DateTime SpawnTime { get { return MySpawnTime; } set { MySpawnTime = value; } }
+
+        private String MyAnimation="Cast1";
+        public String Animation{ get { return MyAnimation; } set { MyAnimation = value; }}
 
         public SpellObject (int _owner) {
             owner = _owner;
@@ -46,7 +58,7 @@ namespace GameServer {
             clone.rotation = Server.clients[owner].player.rotation;
             clone.position = Server.clients[owner].player.position + this.offset;
             clone.position += clone.forward () * OffsetScalar;
-            clone.CastTime = DateTime.Now;
+            clone.SpawnTime = DateTime.Now;
             return clone;
         }
         public Vector3 forward () {

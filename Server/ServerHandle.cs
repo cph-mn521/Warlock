@@ -32,13 +32,8 @@
                 if (player.removed || slot >= player.spellBook.size() ) {
                     return;
                 }
-                SpellObject spell = player.spellBook.CastSpell(slot);
-                spell.id = GameLogic.spells2.Count;
-                spell.target=_target;
-                GameLogic.spells2.Add(spell);
-                ServerSend.Instance.spawnObject(spell);
-
-
+                player.spellBook.CastSpell(slot);
+                player.status.Target = _target;
             }
 
             public static void requestBuySpell(int _fromClient, Packet _packet){
@@ -49,6 +44,13 @@
                 shop.BuySpell(_player,item);
 
                 
+            }
+
+            public static void requestBuyItem(int _fromClient,Packet _packet){
+                Player _player = Server.clients[_fromClient].player;
+                int item = _packet.ReadInt();
+                Console.WriteLine($"request to buy item at pos {item}");
+                shop.buyItem(_player,item);
             }
 
             public static void playerCast (int _fromClient, Packet _packet) { // Race Conditions.

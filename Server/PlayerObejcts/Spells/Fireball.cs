@@ -4,11 +4,15 @@ using System.Numerics;
 namespace GameServer {
     public class Fireball : SpellObject {
 
+        
         private int speed = 1;
         private bool addToCleanup = false;
 
         private int lifetime = 4000;
         public Fireball (int _owner) : base (_owner) {
+            Cooldown= 4000;
+            CastTime=1000;
+
             spellType = SpellType.Fireball;
             OffsetScalar=2.1f;
             try{
@@ -22,7 +26,7 @@ namespace GameServer {
 
         public override void update () {
             position = position +this.forward () * speed;
-            TimeSpan tmElapsed = DateTime.Now - CastTime;
+            TimeSpan tmElapsed = DateTime.Now - SpawnTime;
             for (int i = 1; i <= Server.clients.Count; i++) {
                 try{
                 Vector3 playerPos = Server.clients[i].player.position;

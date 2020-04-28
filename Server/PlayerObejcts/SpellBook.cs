@@ -2,13 +2,17 @@ using System;
 using System.Collections.Generic;
 using GameServer;
 
-namespace Server {
+namespace GameServer {
     public class SpellBook {
         private int owner;
         private List<Spellpage> pages = new List<Spellpage> ();
         private List<SpellType> MyIndex = new List<SpellType> ();
         public SpellObject CastSpell (int index) {
-            return pages[index].cast ();
+            Player _player = Server.clients[owner].player;
+            if(!_player.status.IsCasting){
+                pages[index].cast (_player.status);
+            }
+            return null;
         }
 
         public int getSlot(SpellType _type){
@@ -30,6 +34,7 @@ namespace Server {
         }
         public void addSpell (SpellObject spell) {
             spell.owner=owner;
+            spell.LastCast = DateTime.Now.Add(new TimeSpan(0,1,0));
             pages.Add (new Spellpage (spell));
             MyIndex.Add (spell.spellType);
             Console.WriteLine($"Spell of type {spell.spellType} has been learned");

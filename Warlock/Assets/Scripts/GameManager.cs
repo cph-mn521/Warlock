@@ -71,8 +71,8 @@ public class GameManager : MonoBehaviour {
         players.Remove(id);
     }
 
-    public void addItem(int ItemNr,int playerGold){
-        Shop.addItem(ItemNr);
+    public void addItem(int Slot,int ItemNr,int playerGold){
+        Shop.addItem(ItemNr,Slot);
         Shop.setGold(playerGold);
         // Because price of items is fixed, this doesnt need to change.
     }

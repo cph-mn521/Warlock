@@ -11,8 +11,18 @@ namespace GameServer
             MySpellObject = spell;
         }
     
-        public SpellObject cast(){
-            return MySpellObject.toObject();
+        public void prepareCast(){
+
+        }
+
+        public void cast(Status status){
+            TimeSpan elapsed = MySpellObject.LastCast-DateTime.Now;
+            if(elapsed.TotalMilliseconds >= MySpellObject.Cooldown){
+                status.IsCasting = true;
+                status.CurrentlyCasting = MySpellObject;
+                status.CastingBegan = DateTime.Now;
+                ServerSend.Instance.playerAnimation(MySpellObject.owner,MySpellObject.Animation);
+            }
         }
 
         public void upgrade(){

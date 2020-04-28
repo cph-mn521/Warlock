@@ -62,18 +62,24 @@ namespace GameServer {
 
         #endregion
 
-
         #region Packets
 
-        public void spellPurchase(int PlayerID,int shopIndex,int playerSlot, int playerGold){
-            using (Packet _packet = new Packet ((int) ServerPackets.spellPurchase)){
-                _packet.Write(shopIndex);
-                _packet.Write(playerSlot);
-                _packet.Write(playerGold);
-                sendTCPData(PlayerID,_packet);
+        public void spellPurchase (int PlayerID, int shopIndex, int playerSlot, int playerGold) {
+            using (Packet _packet = new Packet ((int) ServerPackets.spellPurchase)) {
+                _packet.Write (shopIndex);
+                _packet.Write (playerSlot);
+                _packet.Write (playerGold);
+                sendTCPData (PlayerID, _packet);
             }
         }
-
+        public void itemPurchase (int PlayerID,int shopIndex, int playerSlot, int playerGold) {
+            using (Packet _packet = new Packet ((int) ServerPackets.itemPurchase)) {
+                _packet.Write (shopIndex);
+                _packet.Write (playerSlot);
+                _packet.Write (playerGold);
+                sendTCPData (PlayerID, _packet);
+            }
+        }
         public void updateObject (Player _player) {
             using (Packet _packet = new Packet ((int) ServerPackets.updateObject)) {
                 _packet.Write (_player.type);
@@ -106,7 +112,7 @@ namespace GameServer {
             }
         }
 
-        public void spawnObject (SpellObject _object){
+        public void spawnObject (SpellObject _object) {
             using (Packet _packet = new Packet ((int) ServerPackets.spawnObject)) {
                 _packet.Write (_object.type);
                 _packet.Write (_object.id);
@@ -141,6 +147,14 @@ namespace GameServer {
             using (Packet _packet = new Packet ((int) ServerPackets.removeObject)) {
                 _packet.Write (_object.type);
                 _packet.Write (_object.id);
+                SendUDPDataToAll (_packet);
+            }
+        }
+
+        public void playerAnimation(int playerId,String Animation){
+            using (Packet _packet = new Packet ((int) ServerPackets.playerAnimation)) {
+                _packet.Write (playerId);
+                _packet.Write (Animation);
                 SendUDPDataToAll (_packet);
             }
         }

@@ -49,10 +49,10 @@ public class ShopInterface : MonoBehaviour {
         }
 
     }
-    public void addItem (int itemNr) {
+    public void addItem (int itemNr, int Slot) {
         int _current = int.Parse (MyGold.text);
         Item _newItem = new Item ();
-        _newItem.slot = itemNr;
+        _newItem.slot = Slot;
         _newItem.setIcon (ItemSprites[itemNr]);
         BagOfHolding.instance.addItem (_newItem);
         MyGold.text = "" + (_current - itemPrices[itemNr]);

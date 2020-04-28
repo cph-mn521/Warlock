@@ -11,9 +11,22 @@ namespace GameServer {
         private Item[] Slots = new Item[9];
 
         private int currentItems = 0;
+        private Stats TotalStats;
 
+        public void print(){
+            Console.WriteLine($"{TotalStats.HP}{TotalStats.Wheigth}{TotalStats.resistance}{TotalStats.magicResistance}");
+        }
+        public Backpack(Player _player){
+            MyPlayer = _player;
+            TotalStats = new Stats();
+        }
         public int addItem (Item _item) {
-            return 0;
+            Slots[firstEmpty()]= _item;
+            UpdateStats();
+            MyPlayer.updateStats(TotalStats);
+
+            currentItems ++;
+            return firstEmpty();
         }
 
         public void useItem (int index) {
@@ -22,23 +35,31 @@ namespace GameServer {
                 _tmp.use();
             }
         }
+        public bool hasSpace(){
+            return currentItems < 9;
+        }
 
         private int firstEmpty () {
-            return 0;
+            for (int i = 0; i < 9; i++)
+            {
+                if(Slots[i]==null){
+                    return i;
+                }
+            }
+            return -1;
         }
 
-        public void UpdatePlayer(){}
-
-        private class statblock
-        {            
-            public int hp;
-
-            public int weight;
-
-            public int resistance;
-
-            public int value;
+        public void UpdateStats(){
+            Stats _stats = new Stats();
+            for (int i = 0; i < 9; i++)
+            {
+                if(Slots[i]!= null){
+                    _stats = _stats+Slots[i].stats;
+                }
+            }
+            TotalStats = _stats;
         }
+
     }
 
 }

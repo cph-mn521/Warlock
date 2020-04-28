@@ -1,12 +1,14 @@
 using System;
 using System.Threading;
+
+
 namespace GameServer {
     class Program {
         private static bool _isRunning = false;
         
         public static GameLogic game;
 
-        static void Main(string[] args){
+        static void Main(string[] args){            
             Console.Title = "gameServer";
             _isRunning= true;
             Thread mainThread = new Thread(new ThreadStart(MainThread));
