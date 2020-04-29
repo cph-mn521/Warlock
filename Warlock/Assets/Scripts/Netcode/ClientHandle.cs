@@ -89,4 +89,11 @@ public class ClientHandle : MonoBehaviour {
         GameManager.instance.addSpell (Slot, shopIndex, gold);
     }
 
+    public static void playerAnimation(Packet _packet){
+        int playerID = _packet.ReadInt();
+        string animation = _packet.ReadString();
+        Debug.Log($"player animation detected. {playerID} should now play {animation}");
+        GameManager.instance.AnimationTrigger(playerID,animation);
+    }
+
 }

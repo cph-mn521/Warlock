@@ -12,7 +12,7 @@ namespace GameServer {
         public Fireball (int _owner) : base (_owner) {
             Cooldown= 4000;
             CastTime=1000;
-
+            Animation = "Cast2";
             spellType = SpellType.Fireball;
             OffsetScalar=2.1f;
             try{

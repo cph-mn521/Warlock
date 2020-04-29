@@ -134,23 +134,11 @@ namespace GameServer {
 
         public void SendIntoGame (string _PlayerName) {
             player = new Player (id, _PlayerName, new Vector3 (0, 0, 0));
-            player.backpack = new Backpack(player);
-            
+            player.backpack = new Backpack (player);
             Program.game.players += 1;
-            Console.WriteLine (Program.game.players);
-            foreach (Client _client in Server.clients.Values) {
-                if (_client.player != null) {
-                    if (_client.id != id) {
-                        ServerSend.Instance.spawnObject( _client.player);
-                    }
-                }
+            ServerSend.Instance.spawnObject (Server.clients[id].player);
 
-            }
-            foreach (Client _client in Server.clients.Values) {
-                if (_client.player != null) {
-                    ServerSend.Instance.spawnObject (player);
-                }
-            }
         }
     }
+
 }

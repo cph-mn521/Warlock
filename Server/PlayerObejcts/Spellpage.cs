@@ -6,7 +6,6 @@ namespace GameServer
     {
         private SpellObject MySpellObject;
 
-        DateTime lastCast;
         public Spellpage(SpellObject spell){
             MySpellObject = spell;
         }
@@ -16,7 +15,7 @@ namespace GameServer
         }
 
         public void cast(Status status){
-            TimeSpan elapsed = MySpellObject.LastCast-DateTime.Now;
+            TimeSpan elapsed = DateTime.Now-MySpellObject.LastCast;
             if(elapsed.TotalMilliseconds >= MySpellObject.Cooldown){
                 status.IsCasting = true;
                 status.CurrentlyCasting = MySpellObject;
@@ -27,8 +26,7 @@ namespace GameServer
 
         public void upgrade(){
             MySpellObject.rank = MySpellObject.rank+1;
-            Console.WriteLine($"Spell of type {MySpellObject.spellType} has been upgraded and is now rank{MySpellObject.rank}");
-        }
+            }
 
         public void reset(){
             

@@ -34,7 +34,7 @@ namespace GameServer {
         }
         public void addSpell (SpellObject spell) {
             spell.owner=owner;
-            spell.LastCast = DateTime.Now.Add(new TimeSpan(0,1,0));
+            spell.LastCast = DateTime.Now.Add(new TimeSpan(0,-1,0));
             pages.Add (new Spellpage (spell));
             MyIndex.Add (spell.spellType);
             Console.WriteLine($"Spell of type {spell.spellType} has been learned");

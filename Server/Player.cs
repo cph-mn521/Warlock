@@ -56,7 +56,6 @@ namespace GameServer {
 
         public Status status;
 
-        
         public Player (int _id, string _username, Vector3 _pos) {
             BaseStats = new Stats (100, 0, 0, 0);
             CurrentStats = BaseStats;
@@ -97,23 +96,28 @@ namespace GameServer {
                 if (position.Length () > Program.game.mapSize) {
                     currentHP -= (0.5f * (1 - .01f * CurrentStats.resistance));
                 }
+                if (currentHP <= 0 && Program.game.round) {
+                    ServerSend.Instance.playerAnimation (id, "Death");
+                    removed = true;
+                    Program.game.deadPlayers += 1;
+                }
+            } else {
+                Move ();
             }
             ServerSend.Instance.updateObject (this);
 
         }
         private void castSpell () {
             if (status.IsCasting) {
-                
-                TimeSpan elapsed = DateTime.Now-status.CastingBegan;
+                TimeSpan elapsed = DateTime.Now - status.CastingBegan;
                 if (elapsed.TotalMilliseconds >= status.CurrentlyCasting.CastTime) {
                     SpellObject spell = status.CurrentlyCasting.toObject ();
                     spell.id = GameLogic.spells2.Count;
                     spell.target = status.Target;
                     GameLogic.spells2.Add (spell);
                     ServerSend.Instance.spawnObject (spell);
-
                     status.CurrentlyCasting.LastCast = DateTime.Now;
-                    status.IsCasting=false;
+                    status.IsCasting = false;
                 }
             }
         }
@@ -148,15 +152,10 @@ namespace GameServer {
         }
         public void dmg (float amount) {
             currentHP -= amount * (1 - .2f * CurrentStats.magicResistance);
-            if (currentHP <= 0 && !removed && Program.game.round) {
-                Server.cleanUp.Add (this);
-                removed = true;
-                Program.game.deadPlayers += 1;
-            }
         }
 
         private float HpScale () {
-            return 1 + (1 - currentHP / CurrentStats.HP);
+            return 1; //+ (1 - currentHP / CurrentStats.HP);
         }
 
         public void resetHp () {

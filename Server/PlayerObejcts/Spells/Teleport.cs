@@ -9,6 +9,9 @@ namespace GameServer {
       
         public Teleport (int _owner) : base (_owner) { 
             spellType = SpellType.Teleport;
+            Animation = "Cast1";
+            Cooldown = 6000;
+            CastTime =200;
         }
 
         public override void update () {

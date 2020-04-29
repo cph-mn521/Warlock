@@ -147,7 +147,7 @@ namespace GameServer {
             using (Packet _packet = new Packet ((int) ServerPackets.removeObject)) {
                 _packet.Write (_object.type);
                 _packet.Write (_object.id);
-                SendUDPDataToAll (_packet);
+                SendTCPDataToAll (_packet);
             }
         }
 

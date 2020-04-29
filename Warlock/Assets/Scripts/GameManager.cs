@@ -53,9 +53,14 @@ public class GameManager : MonoBehaviour {
             default:
                 break;
         }
-        
-        
+    }
 
+    public void AnimationTrigger(int playerId,string Animation){
+        players[playerId]._animator.SetTrigger(Animation);
+        if (Animation == "Death")
+        {
+            Destroy(players[playerId].gameObject.transform.GetChild(1).gameObject);
+        }
     }
 
     public void removeSpell(int id){
@@ -65,9 +70,7 @@ public class GameManager : MonoBehaviour {
 
     public void removePlayer(int id){
         players[id]._animator.SetTrigger("Death");
-        Destroy(players[id].GetComponent<PlayerManager>());
-        Destroy(players[id].GetComponent<PlayerMovement>());
-        Destroy(players[id].transform.GetChild (1).gameObject);
+        Destroy( players[id].gameObject);
         players.Remove(id);
     }
 
