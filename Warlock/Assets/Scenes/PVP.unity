@@ -2575,42 +2575,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 550771136}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &550771142 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8409086266521507658, guid: 851b41d158dd7574baba33280f7e07a0,
-    type: 3}
-  m_PrefabInstance: {fileID: 550771136}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &550771143 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8409086265130907747, guid: 851b41d158dd7574baba33280f7e07a0,
-    type: 3}
-  m_PrefabInstance: {fileID: 550771136}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &550771144 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8409086266045628775, guid: 851b41d158dd7574baba33280f7e07a0,
-    type: 3}
-  m_PrefabInstance: {fileID: 550771136}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &550771145 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8409086264907789809, guid: 851b41d158dd7574baba33280f7e07a0,
@@ -3610,6 +3574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25e39fb08b6f1d4b995c8a0bc50ce99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerSpawned: 0
   localPlayerPrefab: {fileID: 3130913852121546412, guid: 3a824cb2a8fc7f4419022a9c0be71e71,
     type: 3}
   playerPrefab: {fileID: 5638122376491520402, guid: 4d5186d5d1be56d4e811248d1fd64fbc,
@@ -3772,9 +3737,6 @@ MonoBehaviour:
   - {fileID: 550771147}
   - {fileID: 550771146}
   - {fileID: 550771145}
-  - {fileID: 550771144}
-  - {fileID: 550771143}
-  - {fileID: 550771142}
   startMenu: {fileID: 709229615}
   PlayerUI: {fileID: 550771141}
   Scoreboard: {fileID: 550771140}

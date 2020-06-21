@@ -42,8 +42,8 @@ namespace GameServer {
         private DateTime MySpawnTime;
         public DateTime SpawnTime { get { return MySpawnTime; } set { MySpawnTime = value; } }
 
-        private String MyAnimation="Cast1";
-        public String Animation{ get { return MyAnimation; } set { MyAnimation = value; }}
+        private String MyAnimation = "Cast1";
+        public String Animation { get { return MyAnimation; } set { MyAnimation = value; } }
 
         public SpellObject (int _owner) {
             owner = _owner;
@@ -55,8 +55,13 @@ namespace GameServer {
             clone.rank = rank;
             clone.spellType = spellType;
             clone.OffsetScalar = OffsetScalar;
-            clone.rotation = Server.clients[owner].player.rotation;
-            clone.position = Server.clients[owner].player.position + this.offset;
+            try {
+                clone.rotation = Server.clients[owner].player.rotation;
+                clone.position = Server.clients[owner].player.position + this.offset;
+            }catch{
+                clone.rotation = new Quaternion();
+                clone.position = new Vector3();
+            }
             clone.position += clone.forward () * OffsetScalar;
             clone.SpawnTime = DateTime.Now;
             return clone;

@@ -29,7 +29,7 @@ public class ClientSend : MonoBehaviour {
         using (Packet _packet = new Packet ((int) ClientPackets.playerMovement)) {
 
             _packet.Write (_input);
-            _packet.Write (GameManager.players[Client.instance.myId].transform.rotation);
+            _packet.Write (GameManager.instance.players[Client.instance.myId].transform.rotation);
             sendUDPData (_packet);
         }
     }
@@ -64,7 +64,7 @@ public class ClientSend : MonoBehaviour {
         using (Packet _packet = new Packet ((int) ClientPackets.playerCast)) {
             _packet.Write (slot);
             _packet.Write(target);
-            _packet.Write (GameManager.players[Client.instance.myId].transform.rotation);
+            _packet.Write (GameManager.instance.players[Client.instance.myId].transform.rotation);
             sendUDPData (_packet);
             Debug.Log("pew");
         }

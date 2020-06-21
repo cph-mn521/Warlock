@@ -44,15 +44,15 @@ public class ClientHandle : MonoBehaviour {
         switch (updateType) {
             case 1: //Player Update
                 float _hp = _packet.ReadFloat ();
-                GameManager.players[_id].health = _hp;
-                GameManager.players[_id].position = _position;
+                GameManager.instance.players[_id].health = _hp;
+                GameManager.instance.players[_id].position = _position;
                 if (Client.instance.myId != _id) {
-                    GameManager.players[_id].transform.rotation = _rotation;
+                    GameManager.instance.players[_id].transform.rotation = _rotation;
                 }
                 break;
             case 2:
-                GameManager.spells[_id].position = _position;
-                GameManager.spells[_id].transform.rotation = _rotation;
+                GameManager.instance.spells[_id].position = _position;
+                GameManager.instance.spells[_id].transform.rotation = _rotation;
                 break;
             default:
                 break;

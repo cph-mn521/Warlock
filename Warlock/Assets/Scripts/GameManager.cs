@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
-    public static Dictionary<int, PlayerManager> players = new Dictionary<int, PlayerManager> ();
+    public Dictionary<int, PlayerManager> players = new Dictionary<int, PlayerManager> ();
 
-    public static Dictionary<int, SpellManager> spells = new Dictionary<int, SpellManager> ();
+    public Dictionary<int, SpellManager> spells = new Dictionary<int, SpellManager> ();
 
-    public static bool PlayerSpawned;
+    public bool PlayerSpawned;
     public GameObject localPlayerPrefab;
     public GameObject playerPrefab;
     public GameObject FireballPrefab;

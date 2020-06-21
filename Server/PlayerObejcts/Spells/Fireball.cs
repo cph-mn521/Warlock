@@ -14,6 +14,7 @@ namespace GameServer {
             CastTime=1000;
             Animation = "Cast2";
             spellType = SpellType.Fireball;
+            
             OffsetScalar=2.1f;
             try{
                 rotation = Server.clients[owner].player.rotation;
